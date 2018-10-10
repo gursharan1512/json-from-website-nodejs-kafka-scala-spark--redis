@@ -1,0 +1,19 @@
+#####One time job
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y build-essential
+mkdir nodeserver
+cd nodeServer
+apt-get install npm
+npm init
+cp node_modules.zip
+cp server.js
+sudo apt-get install unzip
+unzip node_modules.
+
+#####Command to run server.js
+sudo node server.js
+
+
+###COmmand to see data in topic
+/opt/bitnami/kafka/bin/kafka-console-consumer.sh --zookeeper 23.251.153.93:2181 --topic test1 --from-beginning

@@ -1,0 +1,46 @@
+
+
+Create a GCP VM instance with following configuration – 		
+2.3.1 Name – as per you choice			
+2.3.2 Zone –	all your resources should be in same zone here we are going to 			select - us-central1
+2.3.3 Machine type – for Dev select 1vCPU machine			
+2.3.4 Firewall– allow HTTP and HTTPS traffic			
+2.3.5 Network– select cdp-network from network interface.			
+2.3.6 Assign static IP which was created in step 2.1 to Kafka VM as shown below
+ 
+ 
+sudo apt-get install openjdk-8-jdk     
+echo "export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_171" >>~/.bashrc
+echo "export PATH=$JAVA_HOME/bin:$PATH" >>~/.bashrc
+
+wget http://www-us.apache.org/dist/kafka/0.10.2.1/kafka_2.10-0.10.2.1.tgz
+tar xzvf kafka_2.10-0.10.2.1.tgz
+
+Navigate to kafka_2.10-0.10.2.1/config, modify zookeeper.properties - 
+        and add the following in the file
+server.1=10.128.0.2:2888:3888 
+initLimit=6
+syncLimit=3
+	
+Navigate	to kafka_2.10-0.10.2.1/config, modify server.properties- 
+and add the following
+port=9092
+host.name=10.128.0.2
+and change the following
+broker.id=0
+num.partitions=4
+zookeeper.connect=<InternalIp>:2181
+
+Start zookeeper (paths relative to kafka_2.10-0.10.2.1 folder) by executing    following command and it will keep running
+sudo bin/zookeeper-server-start.sh config/zookeeper.properties
+
+
+Open the new console as in above image and to start kafka (paths relative to kafka_2.10-0.10.2.1 folder) run the following command in new console
+sudo bin/kafka-server-start.sh config/server.properties
+
+
+Open the new console as above image and create omniture topic by running following command
+bin/kafka-topics.sh --create --topic omniture –zookeeper 10.128.0.2:2181 --partitions 4 --replication-factor 1	
+
+For Testing - Consume data using Kafka Console consumer
+sudo bin/kafka-console-consumer.sh --zookeeper 10.128.0.2:2181 --topic omniture --from-beginning
