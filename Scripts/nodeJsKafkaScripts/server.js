@@ -15,7 +15,7 @@
     function kafaProducer(topics, mes, part) {
     // ... 
      Producer = kafka.Producer,
-     client = new kafka.Client('10.128.0.8:2181');
+     client = new kafka.Client('35.188.11.2:2181');
 
 
  fs.appendFile('log.txt', JSON.stringify(mes)+os.EOL, function (err) {
