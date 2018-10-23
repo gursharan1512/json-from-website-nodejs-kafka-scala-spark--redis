@@ -66,7 +66,9 @@ sudo node server.js &
 
 ################################## Starting KAFKA ########################################
 cd ~/kafka_2.10-0.10.2.1
+echo "Starting Zookeeper ...."
 sudo bin/zookeeper-server-start.sh config/zookeeper.properties &
+echo "Starting kafka ...."
 sudo bin/kafka-server-start.sh config/server.properties	&
 sudo bin/kafka-console-consumer.sh --zookeeper $InternalIP:2181 --topic omniture &
 
