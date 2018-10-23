@@ -7,8 +7,16 @@
 source creatingVM.cfg
 
 ######################### Creating VM instance #########################
+staticIP=$(gcloud compute addresses list | grep 'kafka-static-ip')
+
+if [ "$staticIP" = "" ]
+then 
+	echo "staticIP not found... creating external static IP"
+	#gcloud compute addresses create stat-ddress --global --ip-version IPV4
+	gcloud compute addresses create $kafkaExternalIP --region us-central1
+fi
 echo "Creating VM instance"
-gcloud compute instances create $VMName --zone $VMZone --tags http-server,https-server --scopes cloud-platform
+gcloud compute instances create $VMName --zone $VMZone --tags http-server,https-server --address $kafkaExternalIP --scopes cloud-platform
 
 ######################### Reading files from bucket #########################
 echo "Copying file from bucket to kafka VM"
