@@ -4,10 +4,10 @@
 ##
 
 ######################### Reading variables #########################
-source creatingVM.cfg
+source gcpConfig.cfg
 
 ######################### Creating VM instance #########################
-staticIP=$(gcloud compute addresses list | grep 'kafka-static-ip')
+staticIP=$(gcloud compute addresses list | grep 'kafka-static-ip' | cat)
 
 if [ "$staticIP" = "" ]
 then 
