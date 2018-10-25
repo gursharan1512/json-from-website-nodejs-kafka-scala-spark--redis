@@ -2,8 +2,8 @@
 
 Scripts folder contains files for setting up kafka and nodeJS in GCP VM
 * Upload nodeJSKafkaScripts file in GCP bucket
-* Change creatingVM.cfg file according to your project
-* Now upload creatingVM.cfg and createKafkaVM.sh file in cloud shell and run sh file
+* Change gcpConfig.cfg file according to your project
+* Now upload gcpConfig.cfg and createKafkaVM.sh file in cloud shell and run sh file
 
 Installation folder contains files for manually setting up kafka and nodeJS
 
