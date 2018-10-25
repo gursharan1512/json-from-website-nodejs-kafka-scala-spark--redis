@@ -24,12 +24,13 @@ gsutil cp -r "gs://"$bucket"/nodeJsKafkaScripts" .
 cd "nodeJsKafkaScripts"
 gcloud compute scp --zone $VMZone Kafka_NodeJs.sh $VMName:~/
 gcloud compute scp --zone $VMZone node_modules.zip $VMName:~/
-sudo sed -i 's/35.188.11.2/'$InternalIP'/g' server.js
-gcloud compute scp --zone $VMZone server.js $VMName:~/
 networkIP=$(gcloud compute instances describe $VMName --zone $VMZone | grep 'networkIP')
 echo $networkIP > Kafka_NodeJs.cfg
 sudo sed -i 's/networkIP: /InternalIP=/g' Kafka_NodeJs.cfg
 gcloud compute scp --zone $VMZone Kafka_NodeJs.cfg $VMName:~/
+source Kafka_NodeJs.cfg
+sudo sed -i "s/35.188.11.2/$InternalIP/g" server.js
+gcloud compute scp --zone $VMZone server.js $VMName:~/
 
 ######################### Running Kafka_NodeJs.sh script #########################
 echo "Kafka_NodeJs.sh script"
